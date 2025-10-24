@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page Group</title>
+    
+    <!-- Memuat Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Memuat Google Fonts --><link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@400;500;700&family=Merriweather:wght@400;700&family=Playfair+Display:wght@500;700&family=Hedvig+Letters+Serif:wght@400&display=swap" rel="stylesheet">
+    
+    <!-- Memuat Animate on Scroll (AOS) CSS --><link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Konfigurasi Kustom Tailwind --><script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                        'poppins': ['Poppins', 'sans-serif'],
+                        'hedvig': ['"Hedvig Letters Serif"', 'serif'],
+                        'merriweather': ['Merriweather', 'serif'],
+                        'playfair': ['"Playfair Display"', 'serif'],
+                    },
+                    colors: {
+                        'brand-dark': '#1E1B3A', // Warna gradien atas
+                        'brand-card': '#1E293B', // Warna gradien bawah & fallback kartu
+                        'brand-light': '#E2E8F0', // Warna teks utama
+                        'brand-yellow': '#FFE228', // Warna tombol 'Learn More'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Gaya tambahan kecil untuk body */
+        body {
+            font-family: 'inter', sans-serif;
+            /* GRADIENT DIRUBAH: 
+                Latar belakang gradien yang lebih kaya dan berwarna.
+                dari brand-dark (#1E1B3A) -> fuchsia-950 (#4a044e) -> brand-card (#1E293B)
+            */
+            background-image: linear-gradient(to bottom right, #1E1B3A, #4a044e, #1E293B);
+            color: #E2E8F0; /* brand-light */
+            min-height: 100vh;
+        }
+
+        /* Efek Glassmorphism untuk kartu */
+        .glass-card {
+            background-color: rgba(30, 41, 59, 0.5); /* bg-brand-card/50 */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1); /* border-white/10 */
+            /* EFEK SMOOTH: Transisi halus untuk seluruh kartu */
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* ease-out-cubic, durasi sedikit lebih lama */
+        }
+
+        /* EFEK SMOOTH: Efek zoom kartu saat di-hover */
+        .glass-card:hover {
+            transform: scale(1.03); /* Zoom sedikit lebih kecil agar tidak terlalu dominan */
+        }
+
+        /* Efek Glassmorphism untuk header */
+        .glass-header {
+            background-color: rgba(30, 27, 58, 0.75); /* bg-brand-dark/75 */
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* border-white/10 */
+        }
+
+        /* Transisi untuk Menu Mobile */
+        #mobile-menu {
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            opacity: 0;
+            transform: translateY(-100%);
+            visibility: hidden;
+            background-image: linear-gradient(to bottom right, #1E1B3A, #4a044e, #1E293B);
+        }
+        #mobile-menu.is-open {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+        
+        /* Menambahkan 'margin' di atas target anchor link agar tidak tertutup header */
+        .scroll-target {
+            scroll-margin-top: 5rem; /* 80px */
+        }
+
+    </style>
+</head>
+<body class="text-brand-light">
+
+    <!-- Header / Navigasi (Efek Kaca) --><header class="glass-header shadow-lg sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="flex items-center gap-3 text-white font-poppins text-xl font-medium transition-transform duration-300 hover:scale-110 inline-block">
+                <!-- LOGO SVG -->
+                <svg class="w-10 h-10 text-brand-light" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M16 3H8C5.23858 3 3 5.23858 3 8V16C3 18.7614 5.23858 21 8 21H16C18.7614 21 21 18.7614 21 16V8C21 5.23858 18.7614 3 16 3ZM5 8C5 6.34315 6.34315 5 8 5H16C17.6569 5 19 6.34315 19 8V16C19 17.6569 17.6569 19 16 19H8C6.34315 19 5 17.6569 5 16V8Z" fill="currentColor"/>
+                    <path d="M7 8H17V10H7V8Z" fill="currentColor"/>
+                    <path d="M7 12H17V14H7V12Z" fill="currentColor"/>
+                    <path d="M7 16H13V18H7V16Z" fill="currentColor"/>
+                </svg>
+                <span>Dailly Issue</span>
+            </a>
+            <!-- Navigasi Desktop --><div class="hidden md:flex items-center space-x-2">
+                <a href="#issue" class="px-4 py-2 text-white rounded-full hover:bg-white/10 transition-all duration-300 hover:scale-110 inline-block">Issue</a>
+                <a href="#positive-impact" class="px-4 py-2 text-white rounded-full hover:bg-white/10 transition-all duration-300 hover:scale-110 inline-block">Positive Impact</a>
+                <a href="#negative-impact" class="px-4 py-2 text-white rounded-full hover:bg-white/10 transition-all duration-300 hover:scale-110 inline-block">Negative Impact</a>
+                <a href="#article" class="px-4 py-2 text-white rounded-full hover:bg-white/10 transition-all duration-300 hover:scale-110 inline-block">Article</a>
+            </div>
+            <!-- Tombol Hamburger Mobile --><button id="mobile-menu-button" class="md:hidden text-white p-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Menu Mobile (Full-screen, di-kontrol by JS) --><div id="mobile-menu" class="fixed inset-0 z-40 flex flex-col items-center justify-center space-y-8">
+        <button id="close-menu-button" class="absolute top-6 right-6 text-white p-2">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <a href="#issue" class="mobile-link text-white text-3xl font-hedvig">Issue</a>
+        <a href="#positive-impact" class="mobile-link text-white text-3xl font-hedvig">Positive Impact</a>
+        <a href="#negative-impact" class="mobile-link text-white text-3xl font-hedvig">Negative Impact</a>
+        <a href="#article" class="mobile-link text-white text-3xl font-hedvig">Article</a>
+    </div>
+
+    <!-- Konten Utama --><main>
+
+        <!-- Section Hero --><section 
+            class="relative min-h-[70vh] md:min-h-[80vh] flex items-center justify-center bg-cover bg-center pt-20" 
+            style="background-image: url('https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')"
+        >
+            <!-- Overlay Gelap (DIGELAPKAN ke 60% untuk Kontras) --><div class="absolute inset-0 bg-black/60 z-0"></div>
+
+            <!-- Konten Hero --><div class="relative z-10 container mx-auto px-6 text-center space-y-6 py-12" data-aos="fade-in">
+                <h1 class="text-5xl md:text-7xl font-hedvig font-bold text-white leading-tight drop-shadow-2xl" data-aos="fade-in" data-aos-delay="200">
+                    Mobile Phones Should Be Banned In Classrooms
+                </h1>
+                <p class="text-xl md:text-2xl text-white drop-shadow-lg max-w-2xl mx-auto" data-aos="fade-in" data-aos-delay="400">
+                    Smartphones in Class: A Tool for Learning or a Path to Distraction?
+                </p>
+                <a href="#issue" class="inline-block bg-brand-yellow text-brand-dark font-bold px-8 py-3 rounded-full text-lg hover:bg-yellow-400 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg" data-aos="fade-in" data-aos-delay="600">
+                    Learn More
+                </a>
+            </div>
+
+            </section>
+        
+        <!-- Section Argumen (Padding ditambah, Kartu Kaca) --><div class="container mx-auto px-6 py-20 md:py-28 space-y-24">
+            
+            <!-- Intro Issue --><section id="issue" class="scroll-target text-center max-w-3xl mx-auto space-y-4 p-8 md:p-12 glass-card rounded-2xl shadow-xl mt-16" data-aos="fade-up"> 
+                <h2 class="text-4xl font-hedvig font-bold text-white drop-shadow-md">Issue</h2>
+                <div class="h-1 w-20 bg-brand-yellow mx-auto rounded-full"></div>
+                <p class="text-xl text-white">Mobile phones interrupt learning, encourage distractions, and limit real communication that’s why many believe they should be banned in classrooms.</p>
+            </section>
+
+            <!-- Rangkaian Argumen --><section class="space-y-16 max-w-5xl mx-auto">
+                
+                <!-- Thesis --><article class="grid md:grid-cols-2 gap-8 items-center glass-card p-8 rounded-2xl shadow-xl overflow-hidden" data-aos="fade-up"> 
+                    <!-- GAMBAR DIPASTIKAN SESUAI FILE UPLOAD ANDA -->
+                    <img src="node-210.png" 
+                         alt="Ilustrasi Tesis: Siswa menggunakan HP di kelas" 
+                         class="rounded-lg w-full h-80 object-cover order-1" 
+                         onerror="this.src='https://placehold.co/500x300/130E30/FFFFFF?text=Thesis+Visual'">
+                    <div class="space-y-4 md:order-2">
+                        <h3 class="text-3xl font-merriweather font-bold text-white">Thesis</h3>
+                        <div class="h-1 w-20 bg-brand-yellow rounded-full mt-2 mb-4"></div>
+                        <p class="text-lg text-white">it is believed that mobile phones should be banned on classrooms because they distract interrupt the learning proccess. The classroom is a place for learning and concentration, but phones cause constant distraction that weakens both teaching and learning. Therefore, strict policies are needed to maintain focus and the effectiveness of education.</p>
+                    </div>
+                </article>
+
+                <!-- Argument 1 --><article class="grid md:grid-cols-2 gap-8 items-center glass-card p-8 rounded-2xl shadow-xl overflow-hidden" data-aos="fade-up">
+                    <div class="space-y-4">
+                        <h3 class="text-3xl font-playfair font-medium text-white">Argument 1</h3>
+                        <div class="h-1 w-20 bg-brand-yellow rounded-full mt-2 mb-4"></div>
+                        <p class="text-lg text-white">Firstly, mobile phones greatly reduce students’ focus during lessons. Notifications and social media tempt them to check their screens, splitting attention and lowering comprehension. This distraction also affects nearby students, diminishing the overall quality of learning.</p>
+                    </div>
+                     <!-- GAMBAR DIPASTIKAN SESUAI FILE UPLOAD ANDA -->
+                    <img src="node-207.png" 
+                         alt="Ilustrasi Argumen 1: Kecanduan HP" 
+                         class="rounded-lg w-full h-80 object-cover"
+                         onerror="this.src='https://placehold.co/500x300/130E30/FFFFFF?text=Argument+1+Visual'">
+                </article>
+
+                <!-- Argument 2 --><article class="grid md:grid-cols-2 gap-8 items-center glass-card p-8 rounded-2xl shadow-xl overflow-hidden" data-aos="fade-up">
+                     <!-- GAMBAR DIPASTIKAN SESUAI FILE UPLOAD ANDA -->
+                    <img src="image-2-200.png" 
+                         alt="Ilustrasi Argumen 2: Menyontek dengan HP" 
+                         class="rounded-lg w-full h-80 object-cover order-1"
+                         onerror="this.src='https://placehold.co/500x300/130E30/FFFFFF?text=Argument+2+Visual'">
+                    <div class="space-y-4 md:order-2">
+                        <h3 class="text-3xl font-playfair font-medium text-white">Argument 2</h3>
+                        <div class="h-1 w-20 bg-brand-yellow rounded-full mt-2 mb-4"></div>
+                        <p class="text-lg text-white">Furthermore, phones are often used for cheating. Students can search or share answers quickly, making it hard for teachers to detect dishonesty. This unfairly benefits cheaters and harms the value of honest effort in education.</p>
+                    </div>
+                </article>
+                
+                <!-- Argument 3 --><article class="grid md:grid-cols-2 gap-8 items-center glass-card p-8 rounded-2xl shadow-xl overflow-hidden" data-aos="fade-up">
+                    <div class="space-y-4">
+                        <h3 class="text-3xl font-playfair font-medium text-white">Argument 3</h3>
+                        <div class="h-1 w-20 bg-brand-yellow rounded-full mt-2 mb-4"></div>
+                        <p class="text-lg text-white">Moreover, phone use in class reduces social interaction. Students may isolate themselves instead of engaging in discussions, limiting their communication and teamwork skills. Because cooperation is vital for learning, phones create a colder and less active classroom atmosphere.</p>
+                    </div>
+                     <!-- GAMBAR DIPASTIKAN SESUAI FILE UPLOAD ANDA -->
+                    <img src="image-1-191.png" 
+                         alt="Ilustrasi Argumen 3: Siswa terisolasi karena HP" 
+                         class="rounded-lg w-full h-80 object-cover"
+                         onerror="this.src='https://placehold.co/500x300/130E30/FFFFFF?text=Argument+3+Visual'">
+                </article>
+
+                <!-- Conclusion --><article class="text-center max-w-3xl mx-auto space-y-4 p-8 md:p-12 glass-card rounded-2xl shadow-xl overflow-hidden" data-aos="fade-up">
+                    <h3 class="text-4xl font-merriweather font-bold text-white">Conclusion</h3>
+                    <div class="h-1 w-20 bg-brand-yellow mx-auto rounded-full mt-2 mb-4"></div>
+                    <p class="text-lg text-white">In conclusion, the negative effects of mobile phones—loss of focus, cheating, and poor interaction—far outweigh their benefits. Therefore, schools must ban phones to ensure true engagement and better learning outcomes.</p>
+                </article>
+            </section>
+        </div>
+        
+        <!-- Section Positive Impact --><section id="positive-impact" class="scroll-target py-20 md:py-28">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl md:text-5xl font-hedvig font-bold text-white text-center drop-shadow-md" data-aos="fade-up">Positive Impact</h2>
+                <div class="h-1 w-20 bg-brand-yellow mx-auto rounded-full mb-16 mt-4"></div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Kartu Dampak 1 --><article class="glass-card rounded-2xl shadow-xl overflow-hidden" data-aos="zoom-in-up">
+                        <div class="p-6 md:p-8 space-y-3">
+                            <div class="w-12 h-12 bg-white/10 rounded-lg flex items-center justify-center mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-brand-yellow">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 0 0 0-9-9Z" />
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-hedvig font-semibold text-white">Reduced Academic Cheating</h3>
+                            <p class="text-white">Banning phones prevents cheating and keeps academic assessments fair.</p>
+                        </div>
+                    </article>
+                    
+                    <!-- Kartu Dampak 2 --><article class="glass-card rounded-2xl shadow-xl overflow-hidden" data-aos="zoom-in-up" data-aos-delay="100">
+                        <div class="p-6 md:p-8 space-y-3">
+                            <div class="w-12 h-12 bg-white/10 rounded-lg flex items-center justify-center mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-brand-yellow">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-hedvig font-semibold text-white">Increased Focus and Learning Quality</h3>
+                            <p class="text-white">Limiting phone use helps students stay focused and perform better in class.</p>
+                        </div>
+                    </article>
+
+                    <!-- Kartu Dampak 3 --><article class="glass-card rounded-2xl shadow-xl overflow-hidden" data-aos="zoom-in-up" data-aos-delay="200">
+                        <div class="p-6 md:p-8 space-y-3">
+                            <div class="w-12 h-12 bg-white/10 rounded-lg flex items-center justify-center mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-brand-yellow">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193l-3.722.06c-.247.007-.48.057-.7.144A4.503 4.503 0 0 1 12 21c-2.485 0-4.5-2.015-4.5-4.5v-2.503m0 0v2.503M12 21v-2.118c1.354-.57 2.498-1.68 3.18-3.033m-3.18 3.033c-1.354-.57-2.498-1.68-3.18-3.033m3.18 0M7.5 15v-2.503M4.5 15.75v-2.118c1.354-.57 2.498-1.68 3.18-3.033m-3.18 3.033c-1.354-.57-2.498-1.68-3.18-3.033m0 0M4.5 3.75v2.118c1.354.57 2.498-1.68 3.18-3.033m-3.18-3.033c1.354.57 2.498 1.68 3.18 3.033m3.18 0v-2.503m0 0v2.503m0 0a4.503 4.503 0 0 1-3.18 3.033M12 9.75v-2.118c-1.354.57-2.498 1.68-3.18 3.033m3.18-3.033c1.354.57 2.498 1.68 3.18 3.033m0 0v2.503m0 0v-2.503m0 0a4.503 4.503 0 0 1 3.18-3.033M12 3.75v2.118c-1.354.57-2.498 1.68-3.18 3.033m3.18-3.033c1.354.57 2.498 1.68 3.18 3.033m0 0v2.503m0 0v-2.503m0 0a4.503 4.503 0 0 1 3.18-3.033" />
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-hedvig font-semibold text-white">Encourages Social Interaction</h3>
+                            <p class="text-white">Without phones, students communicate more and build better social skills.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Negative Impact --><section id="negative-impact" class="scroll-target py-20 md:py-28">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl md:text-5xl font-hedvig font-bold text-white text-center drop-shadow-md" data-aos="fade-up">Negative Impact</h2>
+                <div class="h-1 w-20 bg-brand-yellow mx-auto rounded-full mb-16 mt-4"></div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Kartu Dampak 1 --><article class="glass-card rounded-2xl shadow-xl overflow-hidden" data-aos="zoom-in-up">
+                        <div class="p-6 md:p-8 space-y-3">
+                            <div class="w-12 h-12 bg-white/10 rounded-lg flex items-center justify-center mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-brand-yellow">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.003A9.364 9.364 0 0 1 12 21c-2.132 0-4.14-.609-5.878-1.68m5.878-1.68L12 14.128v-2.138c0-1.113.285-2.16-.786-3.07M12 14.128v-2.138m0 0A9.347 9.347 0 0 1 15 8.872M12 14.128v-2.138m0 0L9 16.128m-3-1.99L9 16.128m0 0A9.347 9.347 0 0 1 3 8.872m0 0A9.364 9.364 0 0 1 12 3c2.132 0 4.14.609 5.878 1.68m-5.878 3.555L12 8.872m0 0L15 11.872m0 0A9.347 9.347 0 0 1 21 8.872M3 8.872m0 0L9 11.872m0 0L12 8.872" />
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-hedvig font-semibold text-white">Enforcement and Monitoring Challenges</h3>
+                            <p class="text-white">Monitoring phone bans can distract teachers from their main teaching duties.</p>
+                        </div>
+                    </article>
+                    
+                    <!-- Kartu Dampak 2 --><article class="glass-card rounded-2xl shadow-xl overflow-hidden" data-aos="zoom-in-up" data-aos-delay="100">
+                        <div class="p-6 md:p-8 space-y-3">
+                            <div class="w-12 h-12 bg-white/10 rounded-lg flex items-center justify-center mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-brand-yellow">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-hedvig font-semibold text-white">Loss of Digital Learning Tools</h3>
+                            <p class="text-white">Phones help learning, so banning them could limit useful technology.</p>
+                        </div>
+                    </article>
+                    
+                    <!-- Kartu Dampak 3 --><article class="glass-card rounded-2xl shadow-xl overflow-hidden" data-aos="zoom-in-up" data-aos-delay="200">
+                        <div class="p-6 md:p-8 space-y-3">
+                            <div class="w-12 h-12 bg-white/10 rounded-lg flex items-center justify-center mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-brand-yellow">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-hedvig font-semibold text-white">Potential for Conflict or Resistance</h3>
+                            <p class="text-white">Strict bans can lead to resistance from students and parents.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Article --><section id="article" class="scroll-target py-20 md:py-28">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl md:text-5xl font-hedvig font-bold text-white text-center drop-shadow-md" data-aos="fade-up">Article</h2>
+                <div class="h-1 w-20 bg-brand-yellow mx-auto rounded-full mb-16 mt-4"></div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Kartu Artikel 1 --><article class="glass-card rounded-2xl shadow-xl overflow-hidden flex flex-col" data-aos="zoom-in-up">
+                         <!-- GAMBAR DIPASTIKAN SESUAI FILE UPLOAD ANDA -->
+                        <img src="node-71.png" 
+                             alt="Article 1: Students looking at phone" 
+                             class="w-full h-48 object-cover" 
+                             onerror="this.src='https://placehold.co/400x250/130E30/FFFFFF?text=Article+1'">
+                        <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
+                            <div class="space-y-3">
+                                <h3 class="text-2xl font-hedvig font-semibold text-white">
+                                    <!-- LINK 1 -->
+                                    <a href="https://www.bbc.com/news/articles/c776ye6lrvzo" target="_blank" class="hover:text-brand-yellow transition-colors duration-300">
+                                        Ban mobile phones from classroom 'to protect children from abuse and bullying'
+                                    </a>
+                                </h3>
+                                <p class="text-white line-clamp-3">Shadow Education Secretary Laura Trott says inspectors Ofsted should protect children from harm caused by smartphones</p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Kartu Artikel 2 --><article class="glass-card rounded-2xl shadow-xl overflow-hidden flex flex-col" data-aos="zoom-in-up" data-aos-delay="100">
+                         <!-- GAMBAR DIPASTIKAN SESUAI FILE UPLOAD ANDA -->
+                        <img src="node-84.png" 
+                             alt="Article 2: Phone screen with apps" 
+                             class="w-full h-48 object-cover" 
+                             onerror="this.src='https://placehold.co/400x250/130E30/FFFFFF?text=Article+2'">
+                        <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
+                            <div class="space-y-3">
+                                <h3 class="text-2xl font-hedvig font-semibold text-white">
+                                     <!-- LINK 5 -->
+                                    <a href="https://www.scotsman.com/news/politics/mobile-phones-should-be-banned-in-school-classrooms-says-snp-education-secretary-5342346" target="_blank" class="hover:text-brand-yellow transition-colors duration-300">
+                                        Cellphones will be banned in Quebec schools
+                                    </a>
+                                </h3>
+                                <p class="text-white line-clamp-3">The government will ban cell phones in Quebec elementary and secondary schools starting next year.</p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Kartu Artikel 3 --><article class="glass-card rounded-2xl shadow-xl overflow-hidden flex flex-col" data-aos="zoom-in-up" data-aos-delay="200">
+                         <!-- GAMBAR DIPASTIKAN SESUAI FILE UPLOAD ANDA -->
+                        <img src="node-98.png" 
+                             alt="Article 3: Phone locker in classroom" 
+                             class="w-full h-48 object-cover" 
+                             onerror="this.src='https://placehold.co/400x250/130E30/FFFFFF?text=Article+3'">
+                        <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
+                            <div class="space-y-3">
+                                <h3 class="text-2xl font-hedvig font-semibold text-white">
+                                    <!-- LINK 6 -->
+                                    <a href="https://www.pewresearch.org/short-reads/2025/07/16/americans-support-for-school-cellphone-bans-has-ticked-up-since-last-year/" target="_blank" class="hover:text-brand-yellow transition-colors duration-300">
+                                        States Should Ban Smartphone Use in Public Schools
+                                    </a>
+                                </h3>
+                                <p class="text-white line-clamp-3">States should follow Portland and South Carolina's example by prohibiting student smartphone use in public schools during the school day.</p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Kartu Artikel 4 --><article class="glass-card rounded-2xl shadow-xl overflow-hidden flex flex-col" data-aos="zoom-in-up">
+                         <!-- GAMBAR DIPASTIKAN SESUAI FILE UPLOAD ANDA -->
+                        <img src="node-28.png" 
+                             alt="Article 4: Woman speaking" 
+                             class="w-full h-48 object-cover" 
+                             onerror="this.src='https://placehold.co/400x250/130E30/FFFFFF?text=Article+4'">
+                        <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
+                            <div class="space-y-3">
+                                <h3 class="text-2xl font-hedvig font-semibold text-white">
+                                     <!-- LINK 4 -->
+                                    <a href="https://www.express.co.uk/news/politics/2113516/ban-mobile-phones-classroom-to" target="_blank" class="hover:text-brand-yellow transition-colors duration-300">
+                                        South Korea bans phones in school classrooms nationwide <!-- Judul ini mungkin perlu disesuaikan dengan link -->
+                                    </a>
+                                </h3>
+                                <p class="text-white line-clamp-3">South Korea has passed a bill banning the use of mobile phones and smart devices during class hours in schools.</p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Kartu Artikel 5 --><article class="glass-card rounded-2xl shadow-xl overflow-hidden flex flex-col" data-aos="zoom-in-up" data-aos-delay="100">
+                         <!-- GAMBAR DIPASTIKAN SESUAI FILE UPLOAD ANDA -->
+                        <img src="node-40.png" 
+                             alt="Article 5: Hands holding cracked phone" 
+                             class="w-full h-48 object-cover" 
+                             onerror="this.src='https://placehold.co/400x250/130E30/FFFFFF?text=Article+5'">
+                        <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
+                            <div class="space-y-3">
+                                <h3 class="text-2xl font-hedvig font-semibold text-white">
+                                     <!-- LINK 2 -->
+                                    <a href="https://montreal.citynews.ca/2025/05/01/cellphones-banned-quebec-schools/" target="_blank" class="hover:text-brand-yellow transition-colors duration-300">
+                                        Mobile phones should be banned in school classrooms, says SNP Education Secretary
+                                    </a>
+                                </h3>
+                                <p class="text-white line-clamp-3">The Scottish Government agrees that mobile phones should be banned in school classrooms, the Education Secretary has said.</p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Kartu Artikel 6 --><article class="glass-card rounded-2xl shadow-xl overflow-hidden flex flex-col" data-aos="zoom-in-up" data-aos-delay="200">
+                         <!-- GAMBAR DIPASTIKAN SESUAI FILE UPLOAD ANDA -->
+                        <img src="node-53.png" 
+                             alt="Article 6: Hands using phone outdoors" 
+                             class="w-full h-48 object-cover" 
+                             onerror="this.src='https://placehold.co/400x250/130E30/FFFFFF?text=Article+6'">
+                        <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
+                            <div class="space-y-3">
+                                <h3 class="text-2xl font-hedvig font-semibold text-white">
+                                     <!-- LINK 3 -->
+                                    <a href="https://www.city-journal.org/article/ban-smartphone-use-public-schools" target="_blank" class="hover:text-brand-yellow transition-colors duration-300">
+                                        Americans’ support for school cellphone bans has ticked up
+                                    </a>
+                                </h3>
+                                <p class="text-white line-clamp-3">Today, 74% of U.S. adults say they would support banning middle and high school students from using cellphones during class.</p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer (Efek Kaca Halus) --><footer class="bg-brand-dark/50 border-t border-white/10">
+        <div class="container mx-auto px-6 py-12">
+            <!-- Grid Layout Footer -->
+            <div class="grid grid-cols-1 md:grid-cols-3 items-center text-center gap-8 md:gap-4">
+                
+                <!-- Kolom 1: Logo (kiri) -->
+                <div class="md:text-left">
+                    <a href="#" class="flex items-center justify-center md:justify-start gap-3 text-white font-poppins text-xl font-medium">
+                        <!-- LOGO SVG -->
+                        <svg class="w-10 h-10 text-brand-light" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M16 3H8C5.23858 3 3 5.23858 3 8V16C3 18.7614 5.23858 21 8 21H16C18.7614 21 21 18.7614 21 16V8C21 5.23858 18.7614 3 16 3ZM5 8C5 6.34315 6.34315 5 8 5H16C17.6569 5 19 6.34315 19 8V16C19 17.6569 17.6569 19 16 19H8C6.34315 19 5 17.6569 5 16V8Z" fill="currentColor"/>
+                            <path d="M7 8H17V10H7V8Z" fill="currentColor"/>
+                            <path d="M7 12H17V14H7V12Z" fill="currentColor"/>
+                            <path d="M7 16H13V18H7V16Z" fill="currentColor"/>
+                        </svg>
+                        <span>Daily Issue</span>
+                    </a>
+                </div>
+                
+                <!-- Kolom 2: Copyright (tengah) -->
+                <div class="md:text-center">
+                    <p class="text-sm text-slate-400">&copy; 2025 Daily Issue. All rights reserved</p>
+                </div>
+
+                <!-- Kolom 3: Spacer Kosong -->
+                <div class="hidden md:block">
+                    <!-- Kosong -->
+                </div>
+
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Memuat Animate on Scroll (AOS) JS --><script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      // Inisialisasi AOS
+      AOS.init({
+        duration: 1000, 
+        once: true, 
+        easing: 'ease-out-cubic' 
+      });
+
+      // Script untuk Menu Mobile
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const closeMenuButton = document.getElementById('close-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const mobileLinks = document.querySelectorAll('.mobile-link');
+
+      const toggleMenu = () => {
+          mobileMenu.classList.toggle('is-open'); 
+      };
+
+      mobileMenuButton.addEventListener('click', toggleMenu);
+      closeMenuButton.addEventListener('click', toggleMenu);
+      
+      // Tutup menu setelah link diklik
+      mobileLinks.forEach(link => {
+          link.addEventListener('click', toggleMenu);
+      });
+    </script>
+</body>
+</html>
